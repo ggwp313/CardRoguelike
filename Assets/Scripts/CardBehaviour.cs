@@ -5,11 +5,11 @@ using UnityEngine.EventSystems;
 
 public class CardBehaviour : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    Camera mainCamera;
+    
 
     void Awake()
     {
-        mainCamera = Camera.allCameras[0];
+        
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -19,9 +19,17 @@ public class CardBehaviour : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnDrag(PointerEventData eventData)
     {
-        Vector3 newPos = mainCamera.ScreenToWorldPoint(eventData.position);
+        Debug.Log("OnDrag");
+        Vector3 newPos = Camera.main.ScreenToWorldPoint(eventData.position);
         newPos.z = 0;
         transform.position = newPos;
+
+        //Vector3 newPos = Camera.main.ScreenToWorldPoint(new Vector3(eventData.position.x,eventData.position.y,0));
+        //transform.position = newPos;
+
+        //Vector3 newPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //transform.position = newPos;
+
     }
 
     public void OnEndDrag(PointerEventData eventData)
