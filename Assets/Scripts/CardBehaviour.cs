@@ -3,37 +3,50 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class CardBehaviour : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class CardBehaviour : MonoBehaviour, IBeginDragHandler,IDragHandler,IEndDragHandler
 {
     
 
-    void Awake()
+   private Vector3 _offset;
+   private Transform _defaultParent;
+
+    private GameObject _tempCardGo;
+    private Transform _defaultTempCardParent;
+
+
+
+    public Transform DefaultParent
     {
-        
+        get
+        {
+            return _defaultParent;
+        }
+        set
+        {
+            _defaultParent = value;
+        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        
+        _offset = transform.position - new Vector3(eventData.position.x, eventData.position.y, 0f);
+
+        _defaultParent = transform.parent;
+
+        transform.SetParent(_defaultParent.parent);
+
+        GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        Debug.Log("OnDrag");
-        Vector3 newPos = Camera.main.ScreenToWorldPoint(eventData.position);
-        newPos.z = 0;
-        transform.position = newPos;
-
-        //Vector3 newPos = Camera.main.ScreenToWorldPoint(new Vector3(eventData.position.x,eventData.position.y,0));
-        //transform.position = newPos;
-
-        //Vector3 newPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //transform.position = newPos;
-
+        this.transform.position = new Vector3(eventData.position.x,eventData.position.y,0f) + _offset;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        
+        transform.SetParent(_defaultParent);
+
+        GetComponent<CanvasGroup>().blocksRaycasts = true;
     }
 }

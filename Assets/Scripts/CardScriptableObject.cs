@@ -17,5 +17,4 @@ public class CardScriptableObject : ScriptableObject
 
     [Header("Card Art")]
     public Sprite cardArt;
-    public Sprite cardBackground;
 }

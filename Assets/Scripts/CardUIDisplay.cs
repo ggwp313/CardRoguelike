@@ -38,6 +38,5 @@ public class CardUIDisplay : MonoBehaviour
         _cardHealth.text = _cardInfo.cardHealth.ToString();
         _cardManacost.text = _cardInfo.cardManacost.ToString();
         _cardArt.sprite = _cardInfo.cardArt;
-        _cardBackgroundImage.sprite = _cardInfo.cardBackground;
     }
 }
