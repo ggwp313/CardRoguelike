@@ -39,7 +39,6 @@ public class DropPlace : MonoBehaviour, IDropHandler,IPointerEnterHandler,IPoint
         if (currentCard && currentCard.DefaultTempCardParent == transform)
         {
             currentCard.DefaultTempCardParent = currentCard.DefaultCardParent;
-
         }
     }
 }

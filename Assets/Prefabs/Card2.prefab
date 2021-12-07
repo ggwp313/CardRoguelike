@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 86.6, y: -131.6}
-  m_SizeDelta: {x: 42.253, y: 46.952}
+  m_AnchoredPosition: {x: 91.3, y: -104.1}
+  m_SizeDelta: {x: 30.096, y: 31.0282}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &265237823183081242
 CanvasRenderer:
@@ -92,7 +92,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 42
+  m_fontSize: 27.75
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -168,8 +168,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.1, y: 77.2}
-  m_SizeDelta: {x: 197.586, y: 122.637}
+  m_AnchoredPosition: {x: 0, y: 58}
+  m_SizeDelta: {x: 185.0351, y: 101.8383}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &265237823507332137
 CanvasRenderer:
@@ -337,7 +337,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 2.2651625, y: -6.1616, z: -171.00781, w: -29.445011}
+  m_margin: {x: 2.2651625, y: -3.2652416, z: -171.00781, w: -9.170483}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -386,8 +386,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 214.811, y: 311.042}
+  m_AnchoredPosition: {x: 0, y: -17.7294}
+  m_SizeDelta: {x: 214.811, y: 240}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &265237823941628198
 CanvasRenderer:
@@ -446,7 +446,6 @@ MonoBehaviour:
   _cardHealth: {fileID: 265237823183081243}
   _cardManacost: {fileID: 265237824288151345}
   _cardArt: {fileID: 265237823507332134}
-  _cardBackgroundImage: {fileID: 0}
 --- !u!114 &7742758708845776453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -459,7 +458,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e61dad2feae02764aaad6a042d1ce0c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tempCardGo: {fileID: 5715035926243964390, guid: e0cf8593c641aee4984fc2fb469643a3, type: 3}
 --- !u!225 &4243479404871676953
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -506,8 +504,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -85.7, y: 133.4}
-  m_SizeDelta: {x: 42.253, y: 46.952}
+  m_AnchoredPosition: {x: -91.77863, y: 103.6}
+  m_SizeDelta: {x: 30.096, y: 31.0282}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &265237824288151344
 CanvasRenderer:
@@ -564,7 +562,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 42
+  m_fontSize: 27.75
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -640,8 +638,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -85.7, y: -131.6}
-  m_SizeDelta: {x: 42.253, y: 46.952}
+  m_AnchoredPosition: {x: -91.779, y: -103.5964}
+  m_SizeDelta: {x: 30.096, y: 31.0282}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &265237824528970018
 CanvasRenderer:
@@ -698,7 +696,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 42
+  m_fontSize: 27.75
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -774,8 +772,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -85.7, y: -4.8}
-  m_SizeDelta: {x: 42.253, y: 46.952}
+  m_AnchoredPosition: {x: -85.7, y: -13.1}
+  m_SizeDelta: {x: 42.253, y: 40.105}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &265237824541499049
 CanvasRenderer:
@@ -832,7 +830,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 37.55
+  m_fontSize: 31.45
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
