@@ -7,23 +7,22 @@ using TMPro;
 public class CardUIDisplay : MonoBehaviour
 {
     [SerializeField] 
-    private CardScriptableObject _cardInfo;
+    private CardScriptableObject _cardInfo = null;
 
     [SerializeField]
-  public TextMeshProUGUI _cardName;
+    public TextMeshProUGUI _cardName = null;
     [SerializeField]
-    private TextMeshProUGUI _cardDescription;
+    private TextMeshProUGUI _cardDescription = null;
     [SerializeField]
-    private TextMeshProUGUI _cardAttack;
+    private TextMeshProUGUI _cardAttack = null;
     [SerializeField]
-    private TextMeshProUGUI _cardHealth;
+    private TextMeshProUGUI _cardHealth = null;
     [SerializeField]
-    private TextMeshProUGUI _cardManacost;
+    private TextMeshProUGUI _cardManacost = null;
 
     [SerializeField]
-    private Image _cardArt;
-    [SerializeField]
-    private Image _cardBackgroundImage;
+    private Image _cardArt = null;
+    
 
     void Start()
     {
