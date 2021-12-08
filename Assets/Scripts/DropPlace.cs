@@ -9,9 +9,9 @@ public enum FieldType {
     EnemyHand,
     EnemyField 
 }
-          
-public class DropPlace : MonoBehaviour, IDropHandler,IPointerEnterHandler,IPointerExitHandler
-{ 
+
+public class DropPlace : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
+{
     [SerializeField]
     private FieldType _fieldType;
 
@@ -28,9 +28,12 @@ public class DropPlace : MonoBehaviour, IDropHandler,IPointerEnterHandler,IPoint
     }
     public void OnDrop(PointerEventData eventData)
     {
+        if (_fieldType == FieldType.EnemyField || _fieldType == FieldType.EnemyHand)
+            return;
+
         CardBehaviour currentCard = eventData.pointerDrag.GetComponent<CardBehaviour>();
 
-        if(currentCard)
+        if (currentCard)
         {
             currentCard.DefaultCardParent = transform;
         }
@@ -39,7 +42,7 @@ public class DropPlace : MonoBehaviour, IDropHandler,IPointerEnterHandler,IPoint
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (eventData.pointerDrag == null)
+        if (eventData.pointerDrag == null || _fieldType == FieldType.EnemyField || _fieldType == FieldType.EnemyHand)
             return;
 
         CardBehaviour currentCard = eventData.pointerDrag.GetComponent<CardBehaviour>();
