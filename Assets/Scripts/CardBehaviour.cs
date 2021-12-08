@@ -8,9 +8,12 @@ public class CardBehaviour : MonoBehaviour, IBeginDragHandler,IDragHandler,IEndD
     
 
    private Vector3 _offset;
-    private GameObject _tempCardGo;
-    private Transform _defaultParent = null;
+   private GameObject _tempCardGo;
+   private Transform _defaultParent = null;
    private Transform _defaultTempCardParent;
+
+   private bool _isDraggable;
+
 
     public Transform DefaultCardParent
     {
@@ -46,21 +49,29 @@ public class CardBehaviour : MonoBehaviour, IBeginDragHandler,IDragHandler,IEndD
         //Card Offset
         _offset = transform.position - new Vector3(eventData.position.x, eventData.position.y, 0f);
 
-        //Card & Temp Card Settings
+        
         _defaultParent = transform.parent;
 
+        _isDraggable = _defaultParent.GetComponent<DropPlace>().FieldType == FieldType.PlayerHand;
+
+        if (!_isDraggable)
+            return;
+        
         _defaultTempCardParent = transform.parent;
         _tempCardGo.transform.SetParent(_defaultParent);
         _tempCardGo.transform.SetSiblingIndex(transform.GetSiblingIndex());
 
         transform.SetParent(_defaultParent.parent);
 
-        //turn off CanvasGroup in order to IDropHandler work correctly
+        //  IDropHandler work correctly
         GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (!_isDraggable)
+            return;
+
         //Card Movement
         this.transform.position = new Vector3(eventData.position.x,eventData.position.y,0f) + _offset;
 
@@ -74,13 +85,16 @@ public class CardBehaviour : MonoBehaviour, IBeginDragHandler,IDragHandler,IEndD
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (!_isDraggable)
+            return;
+
         transform.SetParent(_defaultParent);
         GetComponent<CanvasGroup>().blocksRaycasts = true;// turn on back
 
         transform.SetSiblingIndex(_tempCardGo.transform.GetSiblingIndex());
 
-        _tempCardGo.transform.SetParent(GameObject.Find("Canvas").transform);
-        _tempCardGo.transform.localPosition = new Vector3(3000,0);
+        _tempCardGo.transform.SetParent(GameObject.Find("Canvas").transform);// TODO: FIND
+        _tempCardGo.transform.localPosition = new Vector3(3000, 0);// TODO: string 
     }
 
     private void CheckPosition()
@@ -104,4 +118,7 @@ public class CardBehaviour : MonoBehaviour, IBeginDragHandler,IDragHandler,IEndD
 
         _tempCardGo.transform.SetSiblingIndex(newIndex);
     }
+
+
+    
 }

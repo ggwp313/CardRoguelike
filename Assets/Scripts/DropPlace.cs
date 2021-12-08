@@ -3,8 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+public enum FieldType { 
+    PlayerHand,
+    PlayerField,
+    EnemyHand,
+    EnemyField 
+}
+          
 public class DropPlace : MonoBehaviour, IDropHandler,IPointerEnterHandler,IPointerExitHandler
-{
+{ 
+    [SerializeField]
+    private FieldType _fieldType;
+
+    public FieldType FieldType
+    {
+        get
+        {
+            return _fieldType;
+        }
+        set
+        {
+            _fieldType = value;
+        }
+    }
     public void OnDrop(PointerEventData eventData)
     {
         CardBehaviour currentCard = eventData.pointerDrag.GetComponent<CardBehaviour>();

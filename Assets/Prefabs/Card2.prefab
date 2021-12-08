@@ -458,6 +458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e61dad2feae02764aaad6a042d1ce0c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _tempCardGO: {fileID: 1947004564266026625, guid: 150799c44d3966043a9b1edc83d0a833, type: 3}
 --- !u!225 &4243479404871676953
 CanvasGroup:
   m_ObjectHideFlags: 0
