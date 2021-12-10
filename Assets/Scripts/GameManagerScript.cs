@@ -20,15 +20,16 @@ public class GameManagerScript : MonoBehaviour
         }
     }
 
-    public Game Game;
+    private Game Game;
+    public GameObject cardPrefab;
     public Transform enemyHand, playerHand;
     private void Start()
     {
-        Game = new Game();
+        Game = GetComponent<Game>();
 
-        GiveCardToHand(Game.enemyDeck, enemyHand);
-        GiveCardToHand(Game.playerDeck, playerHand);
-    }
+        GiveHandCards(Game.enemyDeck, enemyHand);
+        GiveHandCards(Game.playerDeck, playerHand);
+    } 
 
     public void GiveHandCards(List<CardScriptableObject> p_deck, Transform p_hand)
     {
@@ -39,6 +40,13 @@ public class GameManagerScript : MonoBehaviour
 
     public void GiveCardToHand(List<CardScriptableObject> p_deck, Transform p_hand)
     {
+        if (p_deck.Count == 0)
+            return;
 
+        CardScriptableObject card = p_deck[0];
+
+        p_deck.RemoveAt(0);
+
+        GameObject cardGo = Instantiate(cardPrefab,p_hand,false);
     }
 }

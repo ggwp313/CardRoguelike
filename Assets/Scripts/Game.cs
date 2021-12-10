@@ -10,7 +10,7 @@ public class Game : MonoBehaviour
                                       playerHand, enemyHand,
                                       playerField, enemyField;
 
-    public Game()
+    private void Start()
     {
         enemyDeck = GiveDeckCard();
         playerDeck = GiveDeckCard();
