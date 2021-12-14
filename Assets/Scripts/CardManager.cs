@@ -4,21 +4,27 @@ using UnityEngine;
 
 public class CardManager : MonoBehaviour
 {
+
     [SerializeField]
-    private List<CardScriptableObject> _allCards;
+    private GameObject _cardPrefab;
+    public Transform playerHand;
+    [SerializeField]
+    private List<CardScriptableObject> _allScriptableObjects;
 
-    private void Awake()
+    public List<GameObject> test;
+
+    private void Start()
     {
-        for(int i = 0; i < _allCards.Count; i ++)
+        for(int i = 0; i < _allScriptableObjects.Count; i ++)
         {
-            CardManagerScript._allCards.Add(_allCards[i]);
+            CardUIDisplay card = new CardUIDisplay();
+            card.CardInfo = _allScriptableObjects[i];
+            GameObject cardGo  = Instantiate(_cardPrefab, transform);
+            cardGo.GetComponent<CardUIDisplay>().CardInfo = card.CardInfo;
+            CardManagerScript._allCards.Add(cardGo);
         }
 
-        for (int i = 0; i < CardManagerScript._allCards.Count; i++)
-        {
-            Debug.Log(CardManagerScript._allCards[i].cardName);
-        }
-            
+        test = CardManagerScript._allCards;
     }
 
     
@@ -27,5 +33,5 @@ public class CardManager : MonoBehaviour
 
 public static class CardManagerScript
 {
-    public static List<CardScriptableObject> _allCards = new List<CardScriptableObject>();
+    public static List<GameObject> _allCards = new List<GameObject>();
 }

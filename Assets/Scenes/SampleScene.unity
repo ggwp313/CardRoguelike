@@ -593,11 +593,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19cb6d47c24f70b4e8e913c48feaa469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _allCards:
-  - {fileID: 11400000, guid: f5ac79637ba84b04792becd76f58c68a, type: 2}
-  - {fileID: 11400000, guid: 4763d545858bc6c4fb8100c7c42cbec7, type: 2}
-  - {fileID: 11400000, guid: 6db2a067667240842965b07bd1b36399, type: 2}
-  - {fileID: 11400000, guid: cfe8c3bf2cef40b429963b0cc37116d5, type: 2}
+  _cardPrefab: {fileID: 265237823941628197, guid: 435b41ff5767f9b459d822c65905d70a, type: 3}
+  _allScriptableObjects: []
 --- !u!4 &946819522
 Transform:
   m_ObjectHideFlags: 0

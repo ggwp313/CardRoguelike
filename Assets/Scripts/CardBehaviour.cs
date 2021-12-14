@@ -1,4 +1,4 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -52,7 +52,7 @@ public class CardBehaviour : MonoBehaviour, IBeginDragHandler,IDragHandler,IEndD
         
         _defaultParent = transform.parent;
 
-        _isDraggable = _defaultParent.GetComponent<DropPlace>().FieldType == FieldType.PlayerHand;
+        _isDraggable = (_defaultParent.GetComponent<DropPlace>().FieldType == FieldType.PlayerHand) && GameManagerScript.Instance._isPlayerTurn;
 
         if (!_isDraggable)
             return;

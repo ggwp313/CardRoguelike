@@ -9,6 +9,18 @@ public class CardUIDisplay : MonoBehaviour
     [SerializeField] 
     private CardScriptableObject _cardInfo = null;
 
+    public CardScriptableObject CardInfo
+    {
+        get
+        {
+            return _cardInfo;
+        }
+        set
+        {
+            _cardInfo = value;
+        }
+    }
+
     [SerializeField]
     public TextMeshProUGUI _cardName = null;
     [SerializeField]

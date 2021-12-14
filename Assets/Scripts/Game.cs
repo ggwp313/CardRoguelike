@@ -6,7 +6,7 @@ using TMPro;
 
 public class Game : MonoBehaviour
 {
-    public List<CardScriptableObject> playerDeck, enemyDeck,
+    public List<GameObject> playerDeck, enemyDeck,
                                       playerHand, enemyHand,
                                       playerField, enemyField;
 
@@ -15,16 +15,17 @@ public class Game : MonoBehaviour
         enemyDeck = GiveDeckCard();
         playerDeck = GiveDeckCard();
 
-        enemyHand = new List<CardScriptableObject>();
-        playerHand = new List<CardScriptableObject>();
+        enemyHand = new List<GameObject>();
+        playerHand = new List<GameObject>();
 
-        enemyField = new List<CardScriptableObject>();
-        playerField = new List<CardScriptableObject>();
+        enemyField = new List<GameObject>();
+        playerField = new List<GameObject>();
     }
 
-    List<CardScriptableObject> GiveDeckCard()
+    // initialization of player's adn enemie's deck
+    List<GameObject> GiveDeckCard()
     {
-        List<CardScriptableObject> list = new List<CardScriptableObject>();
+        List<GameObject> list = new List<GameObject>();
         for(int i = 0; i < 10; i++)
         {
             list.Add(CardManagerScript._allCards[Random.Range(0, CardManagerScript._allCards.Count)]);
