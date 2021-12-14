@@ -33,6 +33,8 @@ public class GameManagerScript : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI _turnTimeText;
     [SerializeField]
+    private TextMeshProUGUI _turnNumberText;
+    [SerializeField]
     private Button _endTurnButton;
 
     public bool _isPlayerTurn
@@ -49,6 +51,8 @@ public class GameManagerScript : MonoBehaviour
         Game = GetComponent<Game>();
 
         _turn = 0;
+
+        _turnNumberText.text = "Turn - " + (_turn + 1).ToString();//test round
 
         GiveStartHandCards(Game.enemyDeck, enemyHand);
         GiveStartHandCards(Game.playerDeck, playerHand);
@@ -80,6 +84,8 @@ public class GameManagerScript : MonoBehaviour
         StopAllCoroutines();
 
         _turn++;
+
+        _turnNumberText.text = "Turn - " + (_turn + 1).ToString();//test round
 
         _endTurnButton.interactable = _isPlayerTurn;
         
