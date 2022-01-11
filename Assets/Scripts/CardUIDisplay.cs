@@ -21,6 +21,8 @@ public class CardUIDisplay : MonoBehaviour
         }
     }
 
+    private bool _canAttack = false;
+
     [SerializeField]
     public TextMeshProUGUI _cardName = null;
     [SerializeField]
@@ -36,6 +38,8 @@ public class CardUIDisplay : MonoBehaviour
     private Image _cardArt = null;
     [SerializeField]
     private Image _cardBackArt = null;
+    [SerializeField]
+    private Image _cardHighlightedObj = null;
 
 
     void Start()
@@ -51,6 +55,7 @@ public class CardUIDisplay : MonoBehaviour
         _cardHealth.text = _cardInfo.cardHealth.ToString();
         _cardManacost.text = _cardInfo.cardManacost.ToString();
         _cardArt.sprite = _cardInfo.cardArt;
+        _canAttack = false;
 
     }
 
@@ -62,6 +67,16 @@ public class CardUIDisplay : MonoBehaviour
     {
         _cardBackArt.gameObject.SetActive(false);
     }
-
-
+    public void HighlightCard()
+    {
+        _cardHighlightedObj.gameObject.SetActive(true);
+    }
+    public void DeHighlightCard()
+    {
+        _cardHighlightedObj.gameObject.SetActive(false);
+    }
+    public void CahngeAttackState( bool p_can)
+    {
+        _canAttack = p_can;
+    }
 }

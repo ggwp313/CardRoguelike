@@ -28,26 +28,26 @@ public class DropPlace : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
     }
     public void OnDrop(PointerEventData eventData)
     {
-        if (_fieldType == FieldType.EnemyField || _fieldType == FieldType.EnemyHand)
+        if (_fieldType == FieldType.EnemyField || _fieldType == FieldType.EnemyHand || _fieldType == FieldType.PlayerHand)
             return;
 
-        CardBehaviour currentCard = eventData.pointerDrag.GetComponent<CardBehaviour>();
+        GameObject currentCard = eventData.pointerDrag;
 
-        if (currentCard)
+        if (currentCard && GameManagerScript.Instance.playerFieldCards.Count < 6)
         {
 
-            GameManagerScript.Instance.playerFieldCards.Add(currentCard.GetComponent<GameObject>());
+            GameManagerScript.Instance.playerFieldCards.Add(currentCard);
 
-            GameManagerScript.Instance.playerHandCards.Remove(currentCard.GetComponent<GameObject>());
+            GameManagerScript.Instance.playerHandCards.Remove(currentCard);
 
-            currentCard.DefaultCardParent = transform;
+            currentCard.GetComponent<CardBehaviour>().DefaultCardParent = transform;
         }
 
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (eventData.pointerDrag == null || _fieldType == FieldType.EnemyField || _fieldType == FieldType.EnemyHand)
+        if (eventData.pointerDrag == null || _fieldType == FieldType.EnemyField || _fieldType == FieldType.EnemyHand || _fieldType == FieldType.PlayerHand)
             return;
 
         CardBehaviour currentCard = eventData.pointerDrag.GetComponent<CardBehaviour>();

@@ -121,14 +121,26 @@ public class GameManagerScript : MonoBehaviour
         GiveCardToHand(Game.playerDeck, playerHand);
     }
 
-
+    //Korutina Hoda
     IEnumerator TurnFunc()
     {
         _turnTime = 30;
         _turnTimeText.text = _turnTime.ToString();
 
-        if(_isPlayerTurn)
+        foreach (var card in playerFieldCards)
         {
+            card.GetComponent<CardUIDisplay>().DeHighlightCard();
+        }
+
+        if(_isPlayerTurn)
+        {   
+            //V nachale hoda delaet aktivnymi karty na stole u igroka
+            foreach (var card in playerFieldCards)
+            {
+                card.GetComponent<CardUIDisplay>().CahngeAttackState(true);
+                card.GetComponent<CardUIDisplay>().HighlightCard();
+            }
+
             while(_turnTime -- > 0)
             {
                 _turnTimeText.text = _turnTime.ToString();
@@ -137,8 +149,11 @@ public class GameManagerScript : MonoBehaviour
         }
         else
         {
+            //V nachale hoda delaet aktivnymi karty na stole u enemy
+            foreach (var card in enemyFieldCards)
+                card.GetComponent<CardUIDisplay>().CahngeAttackState(true);
 
-            while(_turnTime -- > 25)
+            while (_turnTime -- > 25)
             {
                 _turnTimeText.text = _turnTime.ToString();
                 yield return new WaitForSeconds(1);
@@ -158,9 +173,12 @@ public class GameManagerScript : MonoBehaviour
     {
         int count = p_cards.Count == 1 ? 1 :
              Random.Range(0,p_cards.Count);
-
+        //6 cards max on field
         for(int i = 0; i < count; i ++)
         {
+            if (enemyFieldCards.Count > 5)
+                return;
+
             p_cards[0].GetComponent<CardUIDisplay>().ShowCardInfo();
             p_cards[0].transform.SetParent(enemyField);
 
