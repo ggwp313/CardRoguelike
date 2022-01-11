@@ -505,7 +505,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -532,7 +532,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 24
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -734,6 +734,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4763d545858bc6c4fb8100c7c42cbec7, type: 2}
   - {fileID: 11400000, guid: 6db2a067667240842965b07bd1b36399, type: 2}
   - {fileID: 11400000, guid: cfe8c3bf2cef40b429963b0cc37116d5, type: 2}
+  - {fileID: 11400000, guid: 619b8c2acd77a26479652c36f4b245aa, type: 2}
+  - {fileID: 11400000, guid: 857e1ad968d4d9246af093c21073d7ac, type: 2}
+  - {fileID: 11400000, guid: 27e846070786b6e43aa1033f3161a4e7, type: 2}
   test: []
 --- !u!4 &946819522
 Transform:
@@ -743,7 +746,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 946819520}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 26.530476, y: -25.043713, z: 88.315735}
+  m_LocalPosition: {x: -389, y: -25.043713, z: 88.315735}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1350,10 +1353,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerDeck: []
   enemyDeck: []
-  playerHand: []
-  enemyHand: []
-  playerField: []
-  enemyField: []
 --- !u!114 &1479634865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1369,9 +1368,15 @@ MonoBehaviour:
   cardPrefab: {fileID: 265237823941628197, guid: 435b41ff5767f9b459d822c65905d70a, type: 3}
   enemyHand: {fileID: 298040228}
   playerHand: {fileID: 30004510}
+  enemyField: {fileID: 1124683593}
+  playerField: {fileID: 828885585}
   _turnTimeText: {fileID: 2110224145}
   _turnNumberText: {fileID: 743302414}
   _endTurnButton: {fileID: 1957499413}
+  playerHandCards: []
+  playerFieldCards: []
+  enemyHandCards: []
+  enemyFieldCards: []
 --- !u!4 &1479634866
 Transform:
   m_ObjectHideFlags: 0
@@ -1380,7 +1385,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1479634863}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 274.99713, y: 192.50006, z: 0}
+  m_LocalPosition: {x: -410, y: -60, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1899,7 +1904,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 2127, y: -921.73987}
+  m_AnchoredPosition: {x: 4089, y: -921.73987}
   m_SizeDelta: {x: 182.9071, y: 240}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1947004563300536346

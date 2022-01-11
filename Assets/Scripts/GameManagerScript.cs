@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,6 +28,7 @@ public class GameManagerScript : MonoBehaviour
     private Game Game;
     public GameObject cardPrefab;
     public Transform enemyHand, playerHand;
+    public Transform enemyField, playerField;
 
     private int _turn, _turnTime = 30;
 
@@ -36,6 +38,12 @@ public class GameManagerScript : MonoBehaviour
     private TextMeshProUGUI _turnNumberText;
     [SerializeField]
     private Button _endTurnButton;
+
+
+    public List<GameObject> playerHandCards = new List<GameObject>();
+    public List<GameObject> playerFieldCards = new List<GameObject>();
+    public List<GameObject> enemyHandCards = new List<GameObject>();
+    public List<GameObject> enemyFieldCards = new List<GameObject>();
 
     public bool _isPlayerTurn
     {
@@ -76,7 +84,17 @@ public class GameManagerScript : MonoBehaviour
 
         p_deck.RemoveAt(0);
 
-        Instantiate(card,p_hand,false);
+        GameObject cardGo = Instantiate(card,p_hand,false);
+
+        if(p_hand == enemyHand)
+        {
+            cardGo.GetComponent<CardUIDisplay>().HideCardInfo();
+            enemyHandCards.Add(cardGo);
+        }
+        else
+        {
+            playerHandCards.Add(cardGo);
+        }
     }
 
     public void ChangeTurn()
@@ -96,12 +114,13 @@ public class GameManagerScript : MonoBehaviour
 
         StartCoroutine(TurnFunc());
     }
-
+    // +1 card from deck on each player turn
     public void GiveNewCard()
     {
         GiveCardToHand(Game.enemyDeck, enemyHand);
         GiveCardToHand(Game.playerDeck, playerHand);
     }
+
 
     IEnumerator TurnFunc()
     {
@@ -119,14 +138,36 @@ public class GameManagerScript : MonoBehaviour
         else
         {
 
-            while(_turnTime -- > 20)
+            while(_turnTime -- > 25)
             {
                 _turnTimeText.text = _turnTime.ToString();
                 yield return new WaitForSeconds(1);
             }
+            //Enemy AI
+            if(enemyHandCards.Count > 0)
+            {
+                EnemyTurn(enemyHandCards);
+            }
 
         }
         ChangeTurn();
+    }
+
+
+    private void EnemyTurn(List<GameObject> p_cards)
+    {
+        int count = p_cards.Count == 1 ? 1 :
+             Random.Range(0,p_cards.Count);
+
+        for(int i = 0; i < count; i ++)
+        {
+            p_cards[0].GetComponent<CardUIDisplay>().ShowCardInfo();
+            p_cards[0].transform.SetParent(enemyField);
+
+
+            enemyFieldCards.Add(p_cards[0]);
+            enemyHandCards.Remove(p_cards[0]);
+        }
     }
 
 }

@@ -35,6 +35,11 @@ public class DropPlace : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 
         if (currentCard)
         {
+
+            GameManagerScript.Instance.playerFieldCards.Add(currentCard.GetComponent<GameObject>());
+
+            GameManagerScript.Instance.playerHandCards.Remove(currentCard.GetComponent<GameObject>());
+
             currentCard.DefaultCardParent = transform;
         }
 

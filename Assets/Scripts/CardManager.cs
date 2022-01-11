@@ -17,10 +17,13 @@ public class CardManager : MonoBehaviour
     {
         for(int i = 0; i < _allScriptableObjects.Count; i ++)
         {
+            //Dostaem ityj po spisku  scriptable odject i zapisywaem w  card.CardInfo
             CardUIDisplay card = new CardUIDisplay();
             card.CardInfo = _allScriptableObjects[i];
+            //Teper inicyalizirujem nowuju kartu i podstawliem jej aktualnyi scriptable object 
             GameObject cardGo  = Instantiate(_cardPrefab, transform);
             cardGo.GetComponent<CardUIDisplay>().CardInfo = card.CardInfo;
+            //Dobawliem w spisok vseh kart
             CardManagerScript._allCards.Add(cardGo);
         }
 

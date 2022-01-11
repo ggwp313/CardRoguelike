@@ -6,20 +6,12 @@ using TMPro;
 
 public class Game : MonoBehaviour
 {
-    public List<GameObject> playerDeck, enemyDeck,
-                                      playerHand, enemyHand,
-                                      playerField, enemyField;
+    public List<GameObject> playerDeck, enemyDeck;
 
     private void Start()
     {
         enemyDeck = GiveDeckCard();
         playerDeck = GiveDeckCard();
-
-        enemyHand = new List<GameObject>();
-        playerHand = new List<GameObject>();
-
-        enemyField = new List<GameObject>();
-        playerField = new List<GameObject>();
     }
 
     // initialization of player's adn enemie's deck

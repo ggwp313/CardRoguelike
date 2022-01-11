@@ -34,11 +34,13 @@ public class CardUIDisplay : MonoBehaviour
 
     [SerializeField]
     private Image _cardArt = null;
-    
+    [SerializeField]
+    private Image _cardBackArt = null;
+
 
     void Start()
     {
-        CardInitialize(); 
+        CardInitialize();
     }
 
     private void CardInitialize()
@@ -49,5 +51,17 @@ public class CardUIDisplay : MonoBehaviour
         _cardHealth.text = _cardInfo.cardHealth.ToString();
         _cardManacost.text = _cardInfo.cardManacost.ToString();
         _cardArt.sprite = _cardInfo.cardArt;
+
     }
+
+    public void HideCardInfo()
+    {
+        _cardBackArt.gameObject.SetActive(true);
+    }
+    public void ShowCardInfo()
+    {
+        _cardBackArt.gameObject.SetActive(false);
+    }
+
+
 }
