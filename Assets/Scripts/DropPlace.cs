@@ -33,7 +33,7 @@ public class DropPlace : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 
         GameObject currentCard = eventData.pointerDrag;
 
-        if (currentCard && GameManagerScript.Instance.playerFieldCards.Count < 6)
+        if (currentCard && GameManagerScript.Instance.playerFieldCards.Count < 6 && GameManagerScript.Instance.IsPlayerTurn)
         {
 
             GameManagerScript.Instance.playerFieldCards.Add(currentCard);

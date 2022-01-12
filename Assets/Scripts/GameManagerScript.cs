@@ -45,7 +45,7 @@ public class GameManagerScript : MonoBehaviour
     public List<GameObject> enemyHandCards = new List<GameObject>();
     public List<GameObject> enemyFieldCards = new List<GameObject>();
 
-    public bool _isPlayerTurn
+    public bool IsPlayerTurn
     {
         get
         {
@@ -94,6 +94,9 @@ public class GameManagerScript : MonoBehaviour
         else
         {
             playerHandCards.Add(cardGo);
+            //Chtoby igrok ne mog atakowac swoi karty
+            cardGo.GetComponent<CardUIDisplay>().ShowCardInfo();
+            cardGo.GetComponent<AttackedCard>().enabled = false;
         }
     }
 
@@ -105,9 +108,9 @@ public class GameManagerScript : MonoBehaviour
 
         _turnNumberText.text = "Turn - " + (_turn + 1).ToString();//test round
 
-        _endTurnButton.interactable = _isPlayerTurn;
+        _endTurnButton.interactable = IsPlayerTurn;
         
-        if (_isPlayerTurn)
+        if (IsPlayerTurn)
         {
             GiveNewCard();
         }
@@ -132,7 +135,7 @@ public class GameManagerScript : MonoBehaviour
             card.GetComponent<CardUIDisplay>().DeHighlightCard();
         }
 
-        if(_isPlayerTurn)
+        if(IsPlayerTurn)
         {   
             //V nachale hoda delaet aktivnymi karty na stole u igroka
             foreach (var card in playerFieldCards)
@@ -186,6 +189,57 @@ public class GameManagerScript : MonoBehaviour
             enemyFieldCards.Add(p_cards[0]);
             enemyHandCards.Remove(p_cards[0]);
         }
+
+        foreach (var activeCard in enemyFieldCards.FindAll(x => x.GetComponent<CardUIDisplay>().CanAttack))
+        {
+            if (playerFieldCards.Count == 0)
+                return;
+
+            var target = playerFieldCards[Random.Range(0, playerFieldCards.Count)];
+
+            Debug.Log(activeCard.GetComponent<CardUIDisplay>().CardInfo.cardName + " (" + activeCard.GetComponent<CardUIDisplay>().CardInfo.cardAttack + ";" + activeCard.GetComponent<CardUIDisplay>().CardInfo.cardHealth + ") " + " --> " + target.GetComponent<CardUIDisplay>().CardInfo.cardName + " (" + target.GetComponent<CardUIDisplay>().CardInfo.cardAttack + ";" + target.GetComponent<CardUIDisplay>().CardInfo.cardHealth + " )");
+
+            activeCard.GetComponent<CardUIDisplay>().CahngeAttackState(false);
+            CardsFight(target,activeCard);
+        }
+
     }
 
+
+    public void CardsFight(GameObject p_playerCard , GameObject p_enemyCard)
+    {
+        p_playerCard.GetComponent<CardUIDisplay>().GetDamage(p_enemyCard.GetComponent<CardUIDisplay>().CardInfo.cardAttack);
+        p_enemyCard.GetComponent<CardUIDisplay>().GetDamage(p_playerCard.GetComponent<CardUIDisplay>().CardInfo.cardAttack);
+
+        if(!p_playerCard.GetComponent<CardUIDisplay>().isAlive)
+        {
+            DestroyCards(p_playerCard);
+        }
+        else
+        {
+            p_playerCard.GetComponent<CardUIDisplay>().RefreshCardInfo();
+        }
+
+        if (!p_enemyCard.GetComponent<CardUIDisplay>().isAlive)
+        {
+            DestroyCards(p_enemyCard);
+        }
+        else
+        {
+            p_enemyCard.GetComponent<CardUIDisplay>().RefreshCardInfo();
+        }
+    }
+
+    public void DestroyCards(GameObject p_card)
+    {
+        p_card.GetComponent<CardBehaviour>().OnEndDrag(null);
+
+        if (enemyFieldCards.Exists( x => x == p_card))
+            enemyFieldCards.Remove(p_card);
+
+        if (playerFieldCards.Exists(x => x == p_card))
+            playerFieldCards.Remove(p_card);
+
+        Destroy(p_card);
+    }
 }

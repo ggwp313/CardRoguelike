@@ -23,6 +23,26 @@ public class CardUIDisplay : MonoBehaviour
 
     private bool _canAttack = false;
 
+    public bool CanAttack
+    {
+        get
+        {
+            return _canAttack;
+        }
+        set
+        {
+            _canAttack = value;
+        }
+    }
+
+    public bool isAlive
+    {
+        get
+        {
+            return _cardCurrentHealth > 0;
+        }
+    }
+
     [SerializeField]
     public TextMeshProUGUI _cardName = null;
     [SerializeField]
@@ -41,6 +61,20 @@ public class CardUIDisplay : MonoBehaviour
     [SerializeField]
     private Image _cardHighlightedObj = null;
 
+    private int _cardCurrentHealth = 0;
+
+    public int CardCurrentHealth
+    {
+        get
+        {
+            return _cardCurrentHealth;
+        }
+        set
+        {
+            _cardCurrentHealth = value;
+        }
+    }
+
 
     void Start()
     {
@@ -55,6 +89,7 @@ public class CardUIDisplay : MonoBehaviour
         _cardHealth.text = _cardInfo.cardHealth.ToString();
         _cardManacost.text = _cardInfo.cardManacost.ToString();
         _cardArt.sprite = _cardInfo.cardArt;
+        _cardCurrentHealth = CardInfo.cardHealth;
         _canAttack = false;
 
     }
@@ -66,6 +101,8 @@ public class CardUIDisplay : MonoBehaviour
     public void ShowCardInfo()
     {
         _cardBackArt.gameObject.SetActive(false);
+
+        RefreshCardInfo();
     }
     public void HighlightCard()
     {
@@ -78,5 +115,15 @@ public class CardUIDisplay : MonoBehaviour
     public void CahngeAttackState( bool p_can)
     {
         _canAttack = p_can;
+    }
+
+    public void GetDamage(int p_dmg)
+    {
+        _cardCurrentHealth = _cardCurrentHealth - p_dmg;
+    }
+
+    public void RefreshCardInfo()
+    {
+        _cardHealth.text = _cardCurrentHealth.ToString();
     }
 }

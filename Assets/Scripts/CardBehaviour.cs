@@ -53,7 +53,7 @@ public class CardBehaviour : MonoBehaviour, IBeginDragHandler,IDragHandler,IEndD
         _defaultParent = transform.parent;
 
         //We can only move cards from our hand and at our turn
-        _isDraggable = ( (_defaultParent.GetComponent<DropPlace>().FieldType == FieldType.PlayerHand || _defaultParent.GetComponent<DropPlace>().FieldType == FieldType.PlayerField) && GameManagerScript.Instance._isPlayerTurn);
+        _isDraggable = ( (_defaultParent.GetComponent<DropPlace>().FieldType == FieldType.PlayerHand || _defaultParent.GetComponent<DropPlace>().FieldType == FieldType.PlayerField) && GameManagerScript.Instance.IsPlayerTurn);
 
         if (!_isDraggable)
             return;
@@ -82,7 +82,10 @@ public class CardBehaviour : MonoBehaviour, IBeginDragHandler,IDragHandler,IEndD
             _tempCardGo.transform.SetParent(_defaultTempCardParent);
         }
 
-        CheckPosition();
+        if(_defaultParent.GetComponent<DropPlace>().FieldType != FieldType.PlayerField)
+        {
+            CheckPosition();
+        }
     }
 
     public void OnEndDrag(PointerEventData eventData)

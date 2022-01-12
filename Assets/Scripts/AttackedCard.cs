@@ -1,18 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class AttackedCard : MonoBehaviour
+public class AttackedCard : MonoBehaviour, IDropHandler
 {
-    // Start is called before the first frame update
-    void Start()
+    public void OnDrop(PointerEventData eventData)
     {
-        
-    }
+        GameObject card = eventData.pointerDrag;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if(card && card.GetComponent<CardUIDisplay>().CanAttack && transform.parent == GameManagerScript.Instance.enemyField)
+        {
+            card.GetComponent<CardUIDisplay>().CahngeAttackState(false);
+            GameManagerScript.Instance.CardsFight(card , this.gameObject);
+        }
     }
 }
