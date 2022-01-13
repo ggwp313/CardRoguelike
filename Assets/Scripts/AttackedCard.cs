@@ -7,6 +7,10 @@ public class AttackedCard : MonoBehaviour, IDropHandler
 {
     public void OnDrop(PointerEventData eventData)
     {
+        if (!GameManagerScript.Instance.IsPlayerTurn)
+            return;
+        
+
         GameObject card = eventData.pointerDrag;
 
         if(card && card.GetComponent<CardUIDisplay>().CanAttack && transform.parent == GameManagerScript.Instance.enemyField)

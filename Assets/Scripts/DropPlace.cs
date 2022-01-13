@@ -32,8 +32,9 @@ public class DropPlace : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
             return;
 
         GameObject currentCard = eventData.pointerDrag;
-
-        if (currentCard && GameManagerScript.Instance.playerFieldCards.Count < 6 && GameManagerScript.Instance.IsPlayerTurn)
+        // Nelzia wystawit esli bolshe 6 na stole/esli ne hvataet many/esli ne nash hod
+        if (currentCard && GameManagerScript.Instance.playerFieldCards.Count < 6 && GameManagerScript.Instance.IsPlayerTurn
+            && GameManagerScript.Instance.PlayerMana >= currentCard.GetComponent<CardUIDisplay>().CardInfo.cardManacost)
         {
 
             GameManagerScript.Instance.playerFieldCards.Add(currentCard);
@@ -41,6 +42,8 @@ public class DropPlace : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
             GameManagerScript.Instance.playerHandCards.Remove(currentCard);
 
             currentCard.GetComponent<CardBehaviour>().DefaultCardParent = transform;
+
+            GameManagerScript.Instance.ReduceMana(true,currentCard.GetComponent<CardUIDisplay>().CardInfo.cardManacost);
         }
 
     }

@@ -30,6 +30,33 @@ public class GameManagerScript : MonoBehaviour
     public Transform enemyHand, playerHand;
     public Transform enemyField, playerField;
 
+    private int _enemyMana = 10;
+    private int _playerMana = 10;
+
+    public int PlayerMana
+    {
+        get
+        {
+            return _playerMana;
+        }
+        set
+        {
+            _playerMana = value;
+        }
+    }
+
+    public int EnemyMana
+    {
+        get
+        {
+            return _enemyMana;
+        }
+        set
+        {
+            _enemyMana = value;
+        }
+    }
+
     private int _turn, _turnTime = 30;
 
     [SerializeField]
@@ -38,6 +65,10 @@ public class GameManagerScript : MonoBehaviour
     private TextMeshProUGUI _turnNumberText;
     [SerializeField]
     private Button _endTurnButton;
+    [SerializeField]
+    private TextMeshProUGUI _playerManapool;
+    [SerializeField]
+    private TextMeshProUGUI _enemyManapool;
 
 
     public List<GameObject> playerHandCards = new List<GameObject>();
@@ -64,6 +95,8 @@ public class GameManagerScript : MonoBehaviour
 
         GiveStartHandCards(Game.enemyDeck, enemyHand);
         GiveStartHandCards(Game.playerDeck, playerHand);
+
+        ShowMana();
 
         StartCoroutine(TurnFunc());
     } 
@@ -113,6 +146,10 @@ public class GameManagerScript : MonoBehaviour
         if (IsPlayerTurn)
         {
             GiveNewCard();
+
+            _playerMana = _enemyMana = 10;
+
+            ShowMana();
         }
 
         StartCoroutine(TurnFunc());
@@ -179,15 +216,23 @@ public class GameManagerScript : MonoBehaviour
         //6 cards max on field
         for(int i = 0; i < count; i ++)
         {
-            if (enemyFieldCards.Count > 5)
+            if (enemyFieldCards.Count > 5 || _enemyMana == 0)
                 return;
 
-            p_cards[0].GetComponent<CardUIDisplay>().ShowCardInfo();
-            p_cards[0].transform.SetParent(enemyField);
+            List<GameObject> cardList = p_cards.FindAll( x => _enemyMana >= x.GetComponent<CardUIDisplay>().CardInfo.cardManacost);
+
+            if(cardList.Count == 0)
+            {
+                break;
+            }
+
+            cardList[0].GetComponent<CardUIDisplay>().ShowCardInfo();
+            cardList[0].transform.SetParent(enemyField);
 
 
-            enemyFieldCards.Add(p_cards[0]);
-            enemyHandCards.Remove(p_cards[0]);
+            enemyFieldCards.Add(cardList[0]);
+
+            enemyHandCards.Remove(cardList [0]);
         }
 
         foreach (var activeCard in enemyFieldCards.FindAll(x => x.GetComponent<CardUIDisplay>().CanAttack))
@@ -241,5 +286,24 @@ public class GameManagerScript : MonoBehaviour
             playerFieldCards.Remove(p_card);
 
         Destroy(p_card);
+    }
+
+    public void ShowMana()
+    {
+        _playerManapool.text = _playerMana.ToString();
+        _enemyManapool.text = _enemyMana.ToString();
+    }
+
+    public void ReduceMana(bool p_playerMana, int p_manacost)
+    {
+        if(p_playerMana)
+        {
+            _playerMana = Mathf.Clamp(_playerMana - p_manacost,0,int.MaxValue);
+        }
+        else
+        {
+            _enemyMana = Mathf.Clamp(_enemyMana - p_manacost, 0, int.MaxValue);
+        }
+        ShowMana();
     }
 }
