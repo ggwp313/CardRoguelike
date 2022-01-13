@@ -78,6 +78,11 @@ public class GameManagerScript : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI _enemyHealthText;
 
+    [SerializeField]
+    private GameObject _resultGO;
+    [SerializeField]
+    private TextMeshProUGUI _resultText;
+
 
 
     public List<GameObject> playerHandCards = new List<GameObject>();
@@ -108,7 +113,7 @@ public class GameManagerScript : MonoBehaviour
         ShowMana();
 
         StartCoroutine(TurnFunc());
-    } 
+    }
 
     public void GiveStartHandCards(List<GameObject> p_deck, Transform p_hand)
     {
@@ -126,9 +131,9 @@ public class GameManagerScript : MonoBehaviour
 
         p_deck.RemoveAt(0);
 
-        GameObject cardGo = Instantiate(card,p_hand,false);
+        GameObject cardGo = Instantiate(card, p_hand, false);
 
-        if(p_hand == enemyHand)
+        if (p_hand == enemyHand)
         {
             cardGo.GetComponent<CardUIDisplay>().HideCardInfo();
             enemyHandCards.Add(cardGo);
@@ -151,7 +156,7 @@ public class GameManagerScript : MonoBehaviour
         _turnNumberText.text = "Turn - " + (_turn + 1).ToString();//test round
 
         _endTurnButton.interactable = IsPlayerTurn;
-        
+
         if (IsPlayerTurn)
         {
             GiveNewCard();
@@ -181,8 +186,8 @@ public class GameManagerScript : MonoBehaviour
             card.GetComponent<CardUIDisplay>().DeHighlightCard();
         }
 
-        if(IsPlayerTurn)
-        {   
+        if (IsPlayerTurn)
+        {
             //V nachale hoda delaet aktivnymi karty na stole u igroka
             foreach (var card in playerFieldCards)
             {
@@ -190,7 +195,7 @@ public class GameManagerScript : MonoBehaviour
                 card.GetComponent<CardUIDisplay>().HighlightCard();
             }
 
-            while(_turnTime -- > 0)
+            while (_turnTime-- > 0)
             {
                 _turnTimeText.text = _turnTime.ToString();
                 yield return new WaitForSeconds(1);
@@ -202,13 +207,13 @@ public class GameManagerScript : MonoBehaviour
             foreach (var card in enemyFieldCards)
                 card.GetComponent<CardUIDisplay>().CahngeAttackState(true);
 
-            while (_turnTime -- > 25)
+            while (_turnTime-- > 25)
             {
                 _turnTimeText.text = _turnTime.ToString();
                 yield return new WaitForSeconds(1);
             }
             //Enemy AI
-            if(enemyHandCards.Count > 0)
+            if (enemyHandCards.Count > 0)
             {
                 EnemyTurn(enemyHandCards);
             }
@@ -221,16 +226,16 @@ public class GameManagerScript : MonoBehaviour
     private void EnemyTurn(List<GameObject> p_cards)
     {
         int count = p_cards.Count == 1 ? 1 :
-             Random.Range(0,p_cards.Count);
+             Random.Range(0, p_cards.Count);
         //6 cards max on field
-        for(int i = 0; i < count; i ++)
+        for (int i = 0; i < count; i++)
         {
             if (enemyFieldCards.Count > 5 || _enemyMana == 0)
                 return;
 
-            List<GameObject> cardList = p_cards.FindAll( x => _enemyMana >= x.GetComponent<CardUIDisplay>().CardInfo.cardManacost);
+            List<GameObject> cardList = p_cards.FindAll(x => _enemyMana >= x.GetComponent<CardUIDisplay>().CardInfo.cardManacost);
 
-            if(cardList.Count == 0)
+            if (cardList.Count == 0)
             {
                 break;
             }
@@ -241,31 +246,34 @@ public class GameManagerScript : MonoBehaviour
 
             enemyFieldCards.Add(cardList[0]);
 
-            enemyHandCards.Remove(cardList [0]);
+            enemyHandCards.Remove(cardList[0]);
         }
 
         foreach (var activeCard in enemyFieldCards.FindAll(x => x.GetComponent<CardUIDisplay>().CanAttack))
         {
-            if (playerFieldCards.Count == 0)
-                return;
+            if (Random.Range(0, 2) == 0 && playerFieldCards.Count > 0)
+            {
+                var target = playerFieldCards[Random.Range(0, playerFieldCards.Count)];
 
-            var target = playerFieldCards[Random.Range(0, playerFieldCards.Count)];
-
-            Debug.Log(activeCard.GetComponent<CardUIDisplay>().CardInfo.cardName + " (" + activeCard.GetComponent<CardUIDisplay>().CardInfo.cardAttack + ";" + activeCard.GetComponent<CardUIDisplay>().CardInfo.cardHealth + ") " + " --> " + target.GetComponent<CardUIDisplay>().CardInfo.cardName + " (" + target.GetComponent<CardUIDisplay>().CardInfo.cardAttack + ";" + target.GetComponent<CardUIDisplay>().CardInfo.cardHealth + " )");
-
-            activeCard.GetComponent<CardUIDisplay>().CahngeAttackState(false);
-            CardsFight(target,activeCard);
+                activeCard.GetComponent<CardUIDisplay>().CahngeAttackState(false);
+                CardsFight(target, activeCard);
+            }
+            else
+            {
+                activeCard.GetComponent<CardUIDisplay>().CahngeAttackState(false);
+                DamageHero(activeCard, false);
+            }
         }
 
     }
 
 
-    public void CardsFight(GameObject p_playerCard , GameObject p_enemyCard)
+    public void CardsFight(GameObject p_playerCard, GameObject p_enemyCard)
     {
         p_playerCard.GetComponent<CardUIDisplay>().GetDamage(p_enemyCard.GetComponent<CardUIDisplay>().CardInfo.cardAttack);
         p_enemyCard.GetComponent<CardUIDisplay>().GetDamage(p_playerCard.GetComponent<CardUIDisplay>().CardInfo.cardAttack);
 
-        if(!p_playerCard.GetComponent<CardUIDisplay>().isAlive)
+        if (!p_playerCard.GetComponent<CardUIDisplay>().isAlive)
         {
             DestroyCards(p_playerCard);
         }
@@ -288,7 +296,7 @@ public class GameManagerScript : MonoBehaviour
     {
         p_card.GetComponent<CardBehaviour>().OnEndDrag(null);
 
-        if (enemyFieldCards.Exists( x => x == p_card))
+        if (enemyFieldCards.Exists(x => x == p_card))
             enemyFieldCards.Remove(p_card);
 
         if (playerFieldCards.Exists(x => x == p_card))
@@ -311,9 +319,9 @@ public class GameManagerScript : MonoBehaviour
 
     public void ReduceMana(bool p_playerMana, int p_manacost)
     {
-        if(p_playerMana)
+        if (p_playerMana)
         {
-            _playerMana = Mathf.Clamp(_playerMana - p_manacost,0,int.MaxValue);
+            _playerMana = Mathf.Clamp(_playerMana - p_manacost, 0, int.MaxValue);
         }
         else
         {
@@ -324,14 +332,33 @@ public class GameManagerScript : MonoBehaviour
 
     public void DamageHero(GameObject p_card, bool p_isEnemyAttacked)
     {
-        if(p_isEnemyAttacked)
+        if (p_isEnemyAttacked)
         {
-            _enemyHealth = Mathf.Clamp(_enemyHealth - p_card.GetComponent<CardUIDisplay>().CardInfo.cardAttack,0,int.MaxValue);
+            _enemyHealth = Mathf.Clamp(_enemyHealth - p_card.GetComponent<CardUIDisplay>().CardInfo.cardAttack, 0, int.MaxValue);
         }
         else
         {
-           _playerHealth = Mathf.Clamp(_playerHealth - p_card.GetComponent<CardUIDisplay>().CardInfo.cardAttack, 0, int.MaxValue);
+            _playerHealth = Mathf.Clamp(_playerHealth - p_card.GetComponent<CardUIDisplay>().CardInfo.cardAttack, 0, int.MaxValue);
         }
         ShowHP();
+        CheckForBattleResult();
+    }
+
+    public void CheckForBattleResult()
+    {
+        if (_enemyHealth == 0 || _playerHealth == 0)
+        {
+            _resultGO.SetActive(true);
+            StopAllCoroutines();
+        }
+
+        if(_enemyHealth == 0)
+        {
+            _resultText.text = "VICTORY";
+        }
+        else
+        {
+            _resultText.text = "YOU LOST"; 
+        }
     }
 }
