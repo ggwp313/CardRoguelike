@@ -1,18 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class AttackedHero : MonoBehaviour
+public class AttackedHero : MonoBehaviour, IDropHandler
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public enum HeroType
+    { 
+        Player,
+        Enemy
     }
 
-    // Update is called once per frame
-    void Update()
+    public HeroType type;
+
+    public void OnDrop(PointerEventData eventData)
     {
-        
+        if (!GameManagerScript.Instance.IsPlayerTurn)
+            return;
+
+        GameObject card = eventData.pointerDrag;
+
+        if(card && card.GetComponent<CardUIDisplay>().CanAttack && type == HeroType.Enemy)
+        {
+            card.GetComponent<CardUIDisplay>().CanAttack = false;
+            GameManagerScript.Instance.DamageHero(card,true);
+        }
+           
     }
 }

@@ -32,6 +32,8 @@ public class GameManagerScript : MonoBehaviour
 
     private int _enemyMana = 10;
     private int _playerMana = 10;
+    private int _playerHealth = 30;
+    private int _enemyHealth = 30;
 
     public int PlayerMana
     {
@@ -65,10 +67,17 @@ public class GameManagerScript : MonoBehaviour
     private TextMeshProUGUI _turnNumberText;
     [SerializeField]
     private Button _endTurnButton;
+
     [SerializeField]
     private TextMeshProUGUI _playerManapool;
     [SerializeField]
     private TextMeshProUGUI _enemyManapool;
+
+    [SerializeField]
+    private TextMeshProUGUI _playerHealthText;
+    [SerializeField]
+    private TextMeshProUGUI _enemyHealthText;
+
 
 
     public List<GameObject> playerHandCards = new List<GameObject>();
@@ -294,6 +303,12 @@ public class GameManagerScript : MonoBehaviour
         _enemyManapool.text = _enemyMana.ToString();
     }
 
+    public void ShowHP()
+    {
+        _enemyHealthText.text = _enemyHealth.ToString();
+        _playerHealthText.text = _playerHealth.ToString();
+    }
+
     public void ReduceMana(bool p_playerMana, int p_manacost)
     {
         if(p_playerMana)
@@ -305,5 +320,18 @@ public class GameManagerScript : MonoBehaviour
             _enemyMana = Mathf.Clamp(_enemyMana - p_manacost, 0, int.MaxValue);
         }
         ShowMana();
+    }
+
+    public void DamageHero(GameObject p_card, bool p_isEnemyAttacked)
+    {
+        if(p_isEnemyAttacked)
+        {
+            _enemyHealth = Mathf.Clamp(_enemyHealth - p_card.GetComponent<CardUIDisplay>().CardInfo.cardAttack,0,int.MaxValue);
+        }
+        else
+        {
+           _playerHealth = Mathf.Clamp(_playerHealth - p_card.GetComponent<CardUIDisplay>().CardInfo.cardAttack, 0, int.MaxValue);
+        }
+        ShowHP();
     }
 }
